@@ -54,7 +54,7 @@ class MAP4Calculator:
         atom_env_pairs_list = [self._calculate(mol) for mol in mols]
         if self.is_folded:
             return [self._fold(pairs) for pairs in atom_env_pairs_list]
-		return [self.encoder.hash(set(pairs)) for pairs in atom_env_pairs_list]
+        return [self.encoder.hash(set(pairs)) for pairs in atom_env_pairs_list]
 
     def _calculate(self, mol):
         return self._all_pairs(mol, self._get_atom_envs(mol))
