@@ -1,3 +1,8 @@
+This version of MAP4 removes any dependence on tmap.
+Thus, this version can be used with Windows.
+In counterpart MHFPEncoder are always used, making the fingerprints inherently folded.
+
+
 Folder description:
 - `Extended-Benchmark`: compounds and query lists used for the peptide benchmark
 - `MAP4-Similarity-Search`: source code for the similarity search app
