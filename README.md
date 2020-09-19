@@ -20,7 +20,7 @@ The resulting list of Shingles is hashed using the unique mapping `SHA-1` to a s
 ![MihHash](https://cloud.gdb.tools/s/nLjQKTcHPLdpnxJ/preview)
 
 To use the MAP4 fingerprint:
-- `git clone https://github.com/reymond-group/map4.git`
+- `git clone https://github.com/OlivierBeq/map4.git`
 - `cd map4`
 
 To install map4 trough Conda:
@@ -28,10 +28,9 @@ To install map4 trough Conda:
 - `conda activate map4`
 
 To install map4 trough pip:
-- install RDKit and tmap:
-   - https://github.com/reymond-group/tmap
+- install RDKit:
    - https://github.com/rdkit/rdkit
-- `pip install git+https://github.com/reymond-group/map4`
+- `pip install git+https://github.com/OlivierBeq/map4`
 
 Run the fingerprint from terminal
 - `cd map4`
@@ -43,18 +42,9 @@ Or import the MAP4Calculator class in your python file (see `test.py`)
 
 # MAP4 - Similarity Search of ChEMBL, Human Metabolome, and SwissProt
 
-Draw a structure or paste its SMILES, or write a natural peptides linear sequence.
-Search for its analogs in the MAP4 or MHFP6 space of ChEMBL, of the Human Metabolome Database (HMDB), or of the 'below 50 residues subset' of SwissProt.
+The code of the MAP4 similarity search has been removed since relying on tmap.
 
 The MAP4 search can be found at: http://map-search.gdb.tools/.
-
-The code of the MAP4 similarity search can be found in this repository folder `MAP4-Similarity-Search`
-
-To run the app locally:
-- Download the MAP4SearchData [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3671214.svg)](https://doi.org/10.5281/zenodo.3671214)
-- Run `docker run -p 8080:5000 --mount type=bind,target=/MAP4SearchData,source=/your/absolut/path/MAP4SearchData  --restart always --name mapsearch alicecapecchi/map-search:latest`
-- The MAP4 similarity search will be running at http://0.0.0.0:8080/
-
 
 # Extended Benchmark
 
