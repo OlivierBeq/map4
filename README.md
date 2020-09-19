@@ -1,6 +1,5 @@
-This version of MAP4 removes any dependence on tmap.
+This version of MAP4 removes any dependence on tmap and replaces it with MHFPEncoder from mhfp.
 Thus, this version can be used with Windows.
-In counterpart MHFPEncoder are always used, making the fingerprints inherently folded.
 
 
 Folder description:

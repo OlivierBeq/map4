@@ -16,13 +16,14 @@ def to_smiles(mol):
 
 class MAP4Calculator:
 
-    def __init__(self, dimensions=1024, radius=2, is_counted=False):
+    def __init__(self, dimensions=1024, radius=2, is_counted=False, is_folded=False):
         """
         MAP4 calculator class
         """
         self.dimensions = dimensions
         self.radius = radius
         self.is_counted = is_counted
+        self.is_folded = is_folded
         self.encoder = MHFPEncoder(dimensions)
 
     def calculate(self, mol):
@@ -32,10 +33,13 @@ class MAP4Calculator:
             mol -- rdkit mol object
 
         Returns:
-            tmap VectorUint -- minhashed fingerprint
+            numpy array -- minhashed fingerprint
         """
+        
         atom_env_pairs = self._calculate(mol)
-        return self._fold(atom_env_pairs)
+        if self.is_folded:
+            return self._fold(atom_env_pairs)
+        return self.encoder.hash(set(atom_env_pairs))
 
     def calculate_many(self, mols):
         """ Calculates the atom pair minhashed fingerprint
@@ -44,11 +48,13 @@ class MAP4Calculator:
             mols -- list of mols
 
         Returns:
-            list of tmap VectorUint -- minhashed fingerprints list
+            list of numpy array -- minhashed fingerprints list
         """
 
         atom_env_pairs_list = [self._calculate(mol) for mol in mols]
-        return [self._fold(pairs) for pairs in atom_env_pairs_list]
+        if self.is_folded:
+            return [self._fold(pairs) for pairs in atom_env_pairs_list]
+		return [self.encoder.hash(set(pairs)) for pairs in atom_env_pairs_list]
 
     def _calculate(self, mol):
         return self._all_pairs(mol, self._get_atom_envs(mol))
@@ -118,7 +124,7 @@ def main():
         else:
             return None
 
-    calculator = MAP4Calculator(args.dimensions, args.radius, args.is_counted)
+    calculator = MAP4Calculator(args.dimensions, args.radius, args.is_counted, args.is_folded)
 
 
     def process(batch, output_file):
@@ -150,6 +156,8 @@ def parse_args():
     parser.add_argument("--radius", "-r", help="Radius of the fingerprint [DEFAULT: 2]",
                         type=int, default=2)
     parser.add_argument("--is-counted", help="The fingerprint stores all shingles.",
+                        action="store_true", default=False)
+    parser.add_argument("--is-folded", help="The fingerprint is folded with modulo (instead of MinHash).",
                         action="store_true", default=False)
     parser.add_argument("--clean-mols", help="Molecules will be canonicalized, cleaned, and chirality information will be removed, \
     NECESSARY FOR FINGERPRINT CONSISTENCY ACROSS DIFFERENT SMILES INPUT [DEFAULT: True].",
